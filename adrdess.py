@@ -1,7 +1,7 @@
+"""アドレスの生成."""
 import hashlib
 import os
 import binascii
-
 import base58
 import ecdsa
 
@@ -29,7 +29,9 @@ def make_public_key(private_key):
     """
 
     print(binascii.hexlify(private_key))
-    public_key = ecdsa.SigningKey.from_string(private_key, ecdsa.SECP256k1).verifying_key.to_string()
+    public_key = ecdsa.SigningKey.from_string(
+        private_key, ecdsa.SECP256k1
+    ).verifying_key.to_string()
     print(binascii.hexlify(public_key))
 
     public_key_y = int.from_bytes(public_key[32:], "big")
@@ -46,9 +48,9 @@ def make_public_key(private_key):
 
 def make_address(public_key):
     """アドレス生成
-    
 
-    :param public_key:公開鍵 
+
+    :param public_key:公開鍵
     :return: アドレス
     """
 
@@ -58,7 +60,7 @@ def make_address(public_key):
     prefix_and_pubkey = b"\x04" + public_key
 
     intermediate = hashlib.sha256(prefix_and_pubkey).digest()
-    repemd160 = hashlib.new('ripemd160')
+    repemd160 = hashlib.new("ripemd160")
     repemd160.update(intermediate)
     hash160 = repemd160.digest()
 
@@ -81,11 +83,8 @@ def make_address(public_key):
     return address
 
 
-if __name__ == '__main__':
-    """
-    メイン処理
-    """
+if __name__ == "__main__":
 
-    private_key = make_private_key()
-    public_key = make_public_key(private_key)
-    address = make_address(public_key)
+    v_private_key = make_private_key()
+    v_public_key = make_public_key(v_private_key)
+    v_address = make_address(v_public_key)

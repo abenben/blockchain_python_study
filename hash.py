@@ -1,3 +1,4 @@
+"""ハッシュ値の生成."""
 import hashlib
 
 
@@ -15,5 +16,5 @@ def sample01():
     print(hash_helloworld)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sample01()
